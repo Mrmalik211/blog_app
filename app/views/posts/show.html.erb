@@ -1,0 +1,14 @@
+<h1><%= @post.title %></h1>
+<%= image_tag @post.image if @post.image.attached?%>
+<p><%= @post.description %></p>
+
+<%if PostPolicy.new(current_user, @post).edit?%>
+  <li><%= link_to "Edit Post", edit_post_path(@post) %></li>
+    <li><%= link_to "Delete Post", @post, method: :delete ,data: {
+                      turbo_method: :delete,
+                      turbo_confirm: "Are you sure?"
+                    } %></li>
+  <%=link_to "Back to Posts", posts_path%>
+<%else%>
+  <%=link_to "Back to Home",root_path%>
+<%end%>

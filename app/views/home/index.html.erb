@@ -1,0 +1,80 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <%=link_to "Blog Application", root_path,class:"navbar-brand"%>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+
+          <%=link_to "My Blogs", posts_path,class:"nav-link active"%>
+        </li>
+
+        <li class="nav-item" style="padding-left: 750px;">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><%=current_user.email if user_signed_in?%></a>
+        </li>
+
+        <% unless user_signed_in?%>
+        <li class="nav-item " style="padding-left: 100px;">
+          <%= link_to "Sign In", new_user_session_path ,class: "btn btn-outline-primary "%>
+        </li>
+
+        <li class="nav-item">
+          <%= link_to "Sign Up", new_user_registration_path ,class: "btn btn-outline-primary"%>
+        </li>
+        <%else%>
+        <li class="nav-item">
+          <%= link_to "Edit Profile", edit_user_registration_path ,class: "btn btn-outline-primary"%>
+        </li>
+
+        <li class="nav-item">
+          <%= link_to "Sign Out", destroy_user_session_path ,class: "btn btn-outline-primary"%>
+        </li>
+        <%end%>
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<%unless user_signed_in?%>
+
+ <div
+    class="bg-image d-flex justify-content-center align-items-center"
+    style="
+      background-image: url('https://images.unsplash.com/photo-1432821596592-e2c18b78144f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmxvZyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80');
+      height: 100vh;
+    "
+  >
+    <h1 class="text-gray">Welcome to the Blog Application<br>Please Sign in to see the Blogs</h1>
+  </div>
+
+<%else%>
+    <br><br><br>
+    <% @users.each do |user|%>
+      <%unless user == current_user %>
+            <% user.posts.each do |post|%>
+
+                <div class="card" style="width: 18rem;display:inline-block;">
+                  <%if post.image.attached?%>
+                    <%= link_to image_tag(post.image ,class: "card-img-top"), post_path(post)%>
+                  <%else%>
+                    <%= link_to image_tag("image_not.jpg" ,class: "card-img-top"), post_path(post)%>
+                  <%end%>
+                  <div class="card-body">
+                    <h5 class="card-title"><%=post.title%></h5>
+                    <p class="card-text" style="text-overflow: ellipsis;white-space: nowrap;overflow:hidden;"><%=post.description%></p>
+                  </div>
+                </div>
+
+
+            <%end%>
+
+
+      <%end%>
+    <%end%>
+
+<%end%>
