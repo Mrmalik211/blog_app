@@ -29,21 +29,21 @@
 
             <div class="form-outline mb-4">
               <label class="form-label" for="form3Example3">Email address</label>
-              <%= f.email_field :email, autofocus: true, autocomplete: "email" ,class: "form-control", id: "form3Example3"%>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email" ,class: "form-control", id: "form3Example3" %>
             </div>
 
             <!-- Password input -->
 
             <div class="form-outline mb-4">
               <label class="form-label" for="form3Example4">Password</label>
-              <%= f.password_field :password, autocomplete: "current-password" ,id: "form3Example4" ,class: "form-control"%>
+              <%= f.password_field :password, autocomplete: "current-password" ,id: "form3Example4" ,class: "form-control" %>
             </div>
 
             <!-- Checkbox -->
 
             <% if devise_mapping.rememberable? %>
               <div class="form-check d-flex justify-content-center mb-4">
-                <%= f.check_box :remember_me, class:"form-check-input me-2", id:"form2Example33"%>
+                <%= f.check_box :remember_me, class:"form-check-input me-2", id:"form2Example33" %>
                 <label class="form-check-label" for="form2Example33">Remember Me</label>
               </div>
             <% end %>
@@ -51,9 +51,9 @@
             <!-- Submit button -->
 
             <div class="actions">
-              <%= f.submit "Log in" ,class:"btn btn-primary btn-block mb-4"%>
+              <%= f.submit "Log in" ,class:"btn btn-primary btn-block mb-4" %>
             </div>
-
+            <%= render "devise/shared/links" %>
             </div>
           </form>
           <%end%>
@@ -63,4 +63,4 @@
   </div>
 </section>
 <!-- Section: Design Block -->
-<%= render "devise/shared/links" %>
+

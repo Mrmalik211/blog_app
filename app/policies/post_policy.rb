@@ -2,7 +2,7 @@ class PostPolicy < Struct.new(:user, :post)
 
 
   def edit?
-    user.id == post.user_id
+      user.id == post.user_id
   end
 
   def update?

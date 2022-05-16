@@ -1,12 +1,12 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_user_post, only: [ :edit, :update, :destroy ]
+
   def index
-    @posts = current_user.posts.all
+    @posts = Post.all
   end
 
-  def show
-    @post = Post.find(params[:id])
-  end
+  def show;end
 
   def new
     @post = Post.new
@@ -14,38 +14,30 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
-    if @post.save
-      redirect_to @post
-    else
-      render :new, status: :unprocessable_entity
-    end
+    @post.save ? (redirect_to @post) : (render :new, status: :unprocessable_entity)
   end
 
-  def edit
-    @post = Post.find(params[:id])
-    authorize @post
-  end
+  def edit;end
 
   def update
-    @post = Post.find(params[:id])
-    authorize @post
-    if @post.update(post_params)
-      redirect_to @post
-    else
-      render :edit, status: :unprocessable_entity
-    end
+    @post.update(post_params) ? (redirect_to @post) : (render :edit, status: :unprocessable_entity)
   end
 
   def destroy
-    @post = Post.find(params[:id])
-    authorize @post
     @post.destroy
-
     redirect_to posts_path, status: :see_other
   end
 
   private
     def post_params
-      params.require(:post).permit(:title, :description,:image).merge(user_id: current_user.id)
+      params.require(:post).permit(:title, :description, :image).merge(user_id: current_user.id)
+    end
+
+    def set_post
+      @post = Post.find(params[:id])
+    end
+
+    def authorize_user_post
+      authorize @post
     end
 end

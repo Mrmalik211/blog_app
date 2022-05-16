@@ -16,3 +16,9 @@
 //= require_tree .
 //= require jquery3
 //= require bootstrap-sprockets
+
+function like() {
+  // body...
+  console.log(params);
+
+}

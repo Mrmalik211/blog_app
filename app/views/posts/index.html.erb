@@ -1,12 +1,15 @@
-<h3>My Posts</h3>
-<ul>
-  <% @posts.each do |post| %>
-    <li>
-      <%=link_to post.title ,post_path(post)%>
-    </li>
-  <% end %>
-</ul>
-
-<%=link_to "Add Post", new_post_path%>
-<br>
-<%=link_to "Home", root_path%>
+<br><br>
+<h3>Posts</h3>
+<% @posts.each do |post| %>
+  <div class="card" style="width: 25rem;display:inline-block;">
+    <% if post.image.attached? %>
+      <%= link_to image_tag(post.image ,class: "card-img-top"), post_path(post) %>
+    <%else%>
+      <%= link_to image_tag("image_not.jpg" ,class: "card-img-top"), post_path(post) %>
+    <%end%>
+    <div class="card-body">
+      <h5 class="card-title"><%= link_to post.title,post_path(post) %></h5>
+      <p class="card-text" style="text-overflow: ellipsis;white-space: nowrap;overflow:hidden;"><%= post.description %></p>
+    </div>
+  </div>
+<% end %>
