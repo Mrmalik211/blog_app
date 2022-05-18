@@ -20,10 +20,15 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
         <li class='nav-item'>
-          <%= link_to 'Add a Blog', new_post_path, class: 'btn btn-outline-primary' %>
+          <%= link_to 'Add a Blog', user_signed_in? ? new_post_path : new_user_session_path , class: 'btn btn-outline-primary' %>
         </li>
+        <% if user_signed_in? && current_user.is_admin? %>
+           <li class='nav-item'>
+            <%= link_to 'Check Users', users_path, class: 'btn btn-outline-primary' %>
+          </li>
+        <% end %>
 
-        <li class="nav-item" style="padding-left: 750px;">
+        <li class="nav-item" style="padding-left: 600px;">
           <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><%= current_user.email if user_signed_in? %></a>
         </li>
 

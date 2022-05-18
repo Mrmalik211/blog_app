@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# This shiny device polishes bared foos
 class ApplicationPolicy
   attr_reader :user, :record
 
@@ -36,6 +37,7 @@ class ApplicationPolicy
     false
   end
 
+  # This shiny device polishes bared foos
   class Scope
     def initialize(user, scope)
       @user = user

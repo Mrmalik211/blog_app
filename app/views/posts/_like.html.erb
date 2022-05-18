@@ -1,0 +1,12 @@
+<% if post.liked_by?(current_user) %>
+  <% like = Like.find_by(user_id: current_user.id, post_id: post.id) %>
+  <%= link_to like_path(like), method: :delete, remote: true do %>
+    <span class="glyphicon glyphicon-heart" aria-hidden="true" style="color: red;">
+    <span><%= post.likes.count %></span>
+  <% end %>
+<% else %>
+  <%= link_to post_likes_path(post), method: :post, remote: true do %>
+    <span class="glyphicon glyphicon-heart" aria-hidden="true" style="color: gray;">
+    <span><%= post.likes.count %></span>
+  <% end %>
+<% end %>

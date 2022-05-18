@@ -9,9 +9,28 @@
 <% end %>
 <br><br>
 <p class='text-muted'><%= @post.description %></p>
-<p>Likes : <%= @post.likes %></p>
 
-<%= link_to 'Like', post_path(@post), :locals => { :project_phase => params[:phase] }, onclick: 'like()',                                     class: 'btn btn-primary' %>
+<% if user_signed_in? %>
+  <% if @post.liked_by?(current_user) %>
+
+    <%= link_to post_like_path(@post), method: :delete do %>
+      <span class="btn btn-primary" style="color: red;">Likes: <%= @post.likes.count %></span>
+    <% end %>
+    <p>liked</p>
+  <% else %>
+    <%= link_to post_likes_path(@post), method: :post do %>
+      <span class="btn btn-primary" >Likes: <%= @post.likes.count %></span>
+    <% end %>
+  <% end %>
+
+<% else %>
+  <span class="btn btn-primary" id='like_btn'>Likes: <%= @post.likes.count %></span>
+  <%= javascript_tag "not_signed_in()" %>
+
+<% end %>
+
+
+
 
 <% if user_signed_in? %>
   <% if PostPolicy.new(current_user, @post).edit? %>
@@ -31,16 +50,19 @@
       <% @post.comments.each do |comment| %>
         <li>
           <%= comment.content %>
-          <% if user_signed_in? && (comment.user_id == current_user.id || @post.user_id == current_user.id) %>
-            <% if current_user.id == comment.user_id %>
-              <%= link_to'Edit', edit_post_comment_path(comment.post,comment),
-                                 class: 'btn btn-outline-primary btn-sm' %>
-            <% end %>
+
+          <% if LikePolicy.new(current_user, comment).edit? %>
+            <%= link_to'Edit', edit_post_comment_path(comment.post,comment),
+                               class: 'btn btn-outline-primary btn-sm' %>
+          <% end %>
+
+          <% if LikePolicy.new(current_user, comment).destroy? %>
             <%= link_to "Delete", [comment.post, comment], method: :delete ,data: {
                             turbo_method: :delete,
                             turbo_confirm: 'Are you sure?'
                           } ,class: 'btn btn-outline-primary btn-sm' %>
           <% end %>
+
         </li>
       <% end %>
     </ul>

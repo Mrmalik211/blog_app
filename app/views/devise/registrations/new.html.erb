@@ -48,12 +48,17 @@
               <%= f.password_field :password_confirmation, autocomplete: "new-password" ,id: "form3Example4" ,class: "form-control" %>
             </div>
 
+            <div class="form-check d-flex justify-content-center mb-4">
+              <%= f.check_box :is_admin  %>
+              <label class="form-check-label" for="form2Example33">Admin </label>
+            </div>
             <!-- Submit button -->
 
             <div class="actions">
               <%= f.submit "Sign up" ,class:"btn btn-primary btn-block mb-4" %>
+              <%= render "devise/shared/links" %>
             </div>
-            <%= render "devise/shared/links" %>
+
             </div>
           </form>
           <%end%>

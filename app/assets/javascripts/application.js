@@ -16,9 +16,16 @@
 //= require_tree .
 //= require jquery3
 //= require bootstrap-sprockets
-
-function like() {
+//= require jquery
+//= require jquery_ujs
+function not_signed_in() {
   // body...
-  console.log(params);
+  const element = document.getElementById('like_btn')
+
+// always checking if the element is clicked, if so, do alert('hello')
+  element.addEventListener("click", () => {
+    alert("You Need to Sign In to like the Post")
+  });
+
 
 }
